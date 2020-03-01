@@ -82,4 +82,25 @@ class PriceListTest {
         Assertions.assertThrows(NullPointerException.class, () ->
                 actual.changeName("Potato", "Corn", new Data(94, 49, 99)));
     }
+
+    @Test
+    void getPriceByCode() {
+        actual.addToPriceList("Milk", new Data(94, 49, 99));
+        actual.addToPriceList("Bread", new Data(44, 25,50));
+        Assertions.assertEquals(49.99, actual.getPriceByCode(94));
+        Assertions.assertEquals(25.50, actual.getPriceByCode(44));
+
+        actual.addToPriceList("Potato",  new Data(94, 29, 59));
+        Assertions.assertEquals(79.58, actual.getPriceByCode(94));
+    }
+
+    @Test
+    void totalCost() {
+        actual.addToPriceList("Milk", new Data(94, 49, 99));
+        actual.addToPriceList("Bread", new Data(44, 25,50));
+        Assertions.assertEquals(75.49, actual.totalCost());
+
+        actual.addToPriceList("Corn", new Data(94, 24, 51));
+        Assertions.assertEquals(100.0, actual.totalCost());
+    }
 }

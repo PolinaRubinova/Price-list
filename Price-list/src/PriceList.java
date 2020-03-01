@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 
 class PriceList {
 
@@ -39,5 +40,23 @@ class PriceList {
             goods.put(newName, codeAndPrice);
         }
         else throw new NullPointerException();
+    }
+
+    double getPriceByCode(int code) {
+        double price = 0;
+        for (Map.Entry<String, Data> e: goods.entrySet()){
+            if (e.getValue().getCode().equals(code)) {
+                price += e.getValue().getPriceRub() + e.getValue().getPricePen() / 100.0;
+            }
+        }
+        return Math.round(price * 100.0) / 100.0;
+    }
+
+    double totalCost() {
+        double sum = 0;
+        for (Map.Entry<String, Data> e: goods.entrySet()){
+            sum += e.getValue().getPriceRub() + e.getValue().getPricePen() / 100.0;
+        }
+        return Math.round(sum * 100.0) / 100.0;
     }
 }
