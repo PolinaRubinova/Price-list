@@ -1,25 +1,19 @@
 class Data {
 
     private Integer code;
-    private Integer priceRub;
-    private Integer pricePen;
+    private Price price;
 
-    Data(int code, int priceRub, int pricePen) {
+    Data(int code, Price price) {
         this.code = code;
-        this.priceRub = priceRub;
-        this.pricePen = pricePen;
+        this.price = price;
     }
 
     Integer getCode() {
         return code;
     }
 
-    Integer getPriceRub() {
-        return priceRub;
-    }
-
-    Integer getPricePen() {
-        return pricePen;
+    Price getPrice() {
+        return price;
     }
 
     @Override
@@ -27,6 +21,6 @@ class Data {
         if (this == other) return true;
         if (getClass() != other.getClass()) return false;
         Data it = (Data) other;
-        return code.equals(it.code) && priceRub.equals(it.priceRub) && pricePen.equals(it.pricePen);
+        return code.equals(it.code) && price.equals(it.price);
     }
 }
