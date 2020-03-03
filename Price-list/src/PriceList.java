@@ -1,44 +1,47 @@
 import java.util.HashMap;
-import java.util.Map;
 
 class PriceList {
 
-    HashMap<String, Data> goods = new HashMap<>();
+    HashMap<Integer, Data> goods = new HashMap<>();
 
-    void addToPriceList(String name, Data codeAndPrice) {
-        nameIsNull(name);
-        dataIsNull(codeAndPrice);
-        if (!goods.containsKey(name)) goods.put(name, codeAndPrice);
+    void addToPriceList(Integer code, Data nameAndPrice) {
+        codeIsNull(code);
+        dataIsNull(nameAndPrice);
+        if (!goods.containsKey(code)) goods.put(code, nameAndPrice);
     }
 
-    private void nameIsNull(String name) {
-        if (name == null) throw new NullPointerException();
+    private void codeIsNull(Integer code) {
+        if (code == null) throw new NullPointerException();
     }
 
     private void dataIsNull(Data data) {
-        if (data.getCode() == null || data.getPrice() == null)
+        if (data.getName() == null || data.getPrice() == null)
             throw new NullPointerException();
     }
 
-    void deleteFromPriceList(String name) {
-        if (goods.containsKey(name)) goods.remove(name);
+    void deleteFromPriceList(Integer code) {
+        if (goods.containsKey(code)) goods.remove(code);
         else throw new NullPointerException();
     }
 
-    void changePrice(String name, Data codeAndPrice) {
-        nameIsNull(name);
-        dataIsNull(codeAndPrice);
-        if (goods.containsKey(name)) goods.put(name, codeAndPrice);
+    void changePrice(Integer code, Price price) {
+        codeIsNull(code);
+        dataIsNull(new Data(goods.get(code).getName(), price));
+        if (goods.containsKey(code)) goods.put(code, new Data(goods.get(code).getName(), price));
         else throw new NullPointerException();
     }
 
-    void changeName(String name, String newName, Data codeAndPrice) {
-        nameIsNull(name);
-        nameIsNull(newName);
-        if (goods.containsKey(name)) {
-            goods.remove(name);
-            goods.put(newName, codeAndPrice);
-        }
+    void changeName(Integer code, String name) {
+        codeIsNull(code);
+        dataIsNull(new Data(name, goods.get(code).getPrice()));
+        if (goods.containsKey(code)) goods.put(code, new Data(name, goods.get(code).getPrice()));
         else throw new NullPointerException();
+    }
+
+    public Price cost(Integer code, Integer numberOfGoods) {
+        int rub = goods.get(code).getPrice().getPriceRub()  * numberOfGoods +
+                goods.get(code).getPrice().getPricePen() * numberOfGoods / 100;
+        int pen =  goods.get(code).getPrice().getPricePen() * numberOfGoods % 100;
+        return new Price(rub, pen);
     }
 }

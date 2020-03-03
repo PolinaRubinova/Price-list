@@ -3,9 +3,10 @@ class Price {
     private int pricePen;
 
     Price(int priceRub, int pricePen) {
-        if (priceRub <= 0 || pricePen <= 0 || pricePen > 99) {
+        if (priceRub <= 0 || pricePen < 0 || pricePen > 99) {
             throw new IllegalArgumentException();
-        } else {
+        }
+        else {
             this.priceRub = priceRub;
             this.pricePen = pricePen;
         }
@@ -15,7 +16,7 @@ class Price {
         return priceRub;
     }
 
-    public int getPricePen() {
+    public int getPricePen(){
         return pricePen;
     }
 
@@ -30,7 +31,7 @@ class Price {
             return true;
         if (!(obj instanceof Price))
             return false;
-        Price other = (Price) obj;
+        Price other = (Price)obj;
         return other.priceRub == priceRub && other.pricePen == pricePen;
     }
 

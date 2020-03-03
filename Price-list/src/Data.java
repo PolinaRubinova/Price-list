@@ -1,15 +1,15 @@
 class Data {
 
-    private Integer code;
+    private String name;
     private Price price;
 
-    Data(int code, Price price) {
-        this.code = code;
+    Data(String name, Price price) {
+        this.name = name;
         this.price = price;
     }
 
-    Integer getCode() {
-        return code;
+    String getName() {
+        return name;
     }
 
     Price getPrice() {
@@ -21,6 +21,6 @@ class Data {
         if (this == other) return true;
         if (getClass() != other.getClass()) return false;
         Data it = (Data) other;
-        return code.equals(it.code) && price.equals(it.price);
+        return name.equals(it.name) && price.equals(it.price);
     }
 }
