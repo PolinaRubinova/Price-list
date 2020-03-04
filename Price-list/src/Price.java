@@ -3,7 +3,7 @@ class Price {
     private int pricePen;
 
     Price(int priceRub, int pricePen) {
-        if (priceRub <= 0 || pricePen < 0 || pricePen > 99) {
+        if (priceRub < 0 || pricePen < 0 || pricePen > 99) {
             throw new IllegalArgumentException();
         }
         else {
@@ -12,11 +12,11 @@ class Price {
         }
     }
 
-    public int getPriceRub() {
+    int getPriceRub() {
         return priceRub;
     }
 
-    public int getPricePen(){
+    int getPricePen(){
         return pricePen;
     }
 

@@ -38,7 +38,7 @@ class PriceList {
         else throw new NullPointerException();
     }
 
-    public Price cost(Integer code, Integer numberOfGoods) {
+    Price cost(Integer code, Integer numberOfGoods) {
         int rub = goods.get(code).getPrice().getPriceRub()  * numberOfGoods +
                 goods.get(code).getPrice().getPricePen() * numberOfGoods / 100;
         int pen =  goods.get(code).getPrice().getPricePen() * numberOfGoods % 100;
