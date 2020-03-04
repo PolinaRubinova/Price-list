@@ -1,7 +1,6 @@
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-
 import java.util.HashMap;
 
 class PriceListTest {
@@ -84,11 +83,22 @@ class PriceListTest {
     }
 
     @Test
+    void priceToString() {
+        actual.addToPriceList(94, new Data("Milk", new Price(65,50)));
+        actual.addToPriceList(44, new Data("Bread", new Price(25,55)));
+
+        Assertions.assertEquals("65 рублей 50 копеек;", actual.goods.get(94).getPrice().toString());
+        Assertions.assertEquals("25 рублей 55 копеек;", actual.goods.get(44).getPrice().toString());
+    }
+
+    @Test
     void cost() {
         actual.addToPriceList(94, new Data("Milk", new Price(65,50)));
         actual.addToPriceList(44, new Data("Bread", new Price(25,55)));
 
         Assertions.assertEquals(new Price(131, 0), actual.cost(94, 2));
         Assertions.assertEquals(new Price(76, 65), actual.cost(44, 3));
+
+        Assertions.assertEquals(new Price(0, 0), actual.cost(94, 0));
     }
 }

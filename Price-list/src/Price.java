@@ -1,4 +1,5 @@
 class Price {
+
     private int priceRub;
     private int pricePen;
 
@@ -6,17 +7,15 @@ class Price {
         if (priceRub < 0 || pricePen < 0 || pricePen > 99) {
             throw new IllegalArgumentException();
         }
-        else {
-            this.priceRub = priceRub;
-            this.pricePen = pricePen;
-        }
+        this.priceRub = priceRub;
+        this.pricePen = pricePen;
     }
 
     int getPriceRub() {
         return priceRub;
     }
 
-    int getPricePen(){
+    int getPricePen() {
         return pricePen;
     }
 
