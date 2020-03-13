@@ -6,7 +6,7 @@ import java.util.HashMap;
 class PriceListTest {
 
     private PriceList actual = new PriceList();
-    private HashMap<Integer, Data> expected = new HashMap<>();
+    private HashMap<Integer, NameAndPrice> expected = new HashMap<>();
 
     //94, new Data("Milk", new Price(65,50))
     //44, new Data("Bread", new Price(25,50))
@@ -15,51 +15,48 @@ class PriceListTest {
 
     @Test
     void add() {
-        expected.put(94, new Data("Milk", new Price(65,50)));
-        expected.put(44, new Data("Bread", new Price(25,50)));
+        expected.put(94, new NameAndPrice("Milk", new Price(65,50)));
+        expected.put(44, new NameAndPrice("Bread", new Price(25,50)));
 
-        actual.addToPriceList(94, new Data("Milk", new Price(65,50)));
-        actual.addToPriceList(44, new Data("Bread", new Price(25,50)));
+        actual.add(94, new NameAndPrice("Milk", new Price(65,50)));
+        actual.add(44, new NameAndPrice("Bread", new Price(25,50)));
         Assert.assertEquals(expected, actual.goods);
 
-        actual.addToPriceList(94, new Data("Milk", new Price(65,50)));
+        actual.add(94, new NameAndPrice("Milk", new Price(65,50)));
         Assert.assertEquals(expected, actual.goods);
 
         expected.remove(94);
         Assert.assertNotEquals(expected, actual.goods);
 
-        expected.put(94, new Data("Milk", new Price(65,50)));
+        expected.put(94, new NameAndPrice("Milk", new Price(65,50)));
         Assert.assertEquals(expected, actual.goods);
 
         Assertions.assertThrows(NullPointerException.class, () ->
-                actual.addToPriceList(null, new Data("Bread", new Price(65, 50))));
+                actual.add(null, new NameAndPrice("Bread", new Price(65, 50))));
         Assertions.assertThrows(NullPointerException.class, () ->
-                actual.addToPriceList(94, null));
+                actual.add(94, null));
     }
 
     @Test
     void delete() {
-        expected.put(94, new Data("Milk", new Price(65,50)));
+        expected.put(94, new NameAndPrice("Milk", new Price(65,50)));
 
-        actual.addToPriceList(94, new Data("Milk", new Price(65,50)));
+        actual.add(94, new NameAndPrice("Milk", new Price(65,50)));
         Assert.assertEquals(expected, actual.goods);
 
-        actual.addToPriceList(44, new Data("Bread", new Price(25,50)));
-        actual.deleteFromPriceList(94);
+        actual.add(44, new NameAndPrice("Bread", new Price(25,50)));
+        actual.delete(94);
         Assert.assertNotEquals(expected, actual.goods);
 
-        actual.addToPriceList(94, new Data("Milk", new Price(65,50)));
-        actual.deleteFromPriceList(44);
+        actual.add(94, new NameAndPrice("Milk", new Price(65,50)));
+        actual.delete(44);
         Assert.assertEquals(expected, actual.goods);
-
-        Assertions.assertThrows(NullPointerException.class, () ->
-                actual.deleteFromPriceList(10));
     }
 
     @Test
     void changePrice() {
-        expected.put(94, new Data("Milk", new Price(49, 99)));
-        actual.addToPriceList(94, new Data("Milk", new Price(65,50)));
+        expected.put(94, new NameAndPrice("Milk", new Price(49, 99)));
+        actual.add(94, new NameAndPrice("Milk", new Price(65,50)));
         Assert.assertNotEquals(expected, actual.goods);
 
         actual.changePrice(94, new Price(49, 99));
@@ -71,8 +68,8 @@ class PriceListTest {
 
     @Test
     void changeName() {
-        expected.put(94, new Data("Meat", new Price(49, 99)));
-        actual.addToPriceList(94, new Data("Milk", new Price(49, 99)));
+        expected.put(94, new NameAndPrice("Meat", new Price(49, 99)));
+        actual.add(94, new NameAndPrice("Milk", new Price(49, 99)));
         Assert.assertNotEquals(expected, actual.goods);
 
         actual.changeName(94, "Meat");
@@ -84,8 +81,8 @@ class PriceListTest {
 
     @Test
     void priceToString() {
-        actual.addToPriceList(94, new Data("Milk", new Price(65,50)));
-        actual.addToPriceList(44, new Data("Bread", new Price(25,55)));
+        actual.add(94, new NameAndPrice("Milk", new Price(65,50)));
+        actual.add(44, new NameAndPrice("Bread", new Price(25,55)));
 
         Assertions.assertEquals("65 рублей 50 копеек;", actual.goods.get(94).getPrice().toString());
         Assertions.assertEquals("25 рублей 55 копеек;", actual.goods.get(44).getPrice().toString());
@@ -93,8 +90,8 @@ class PriceListTest {
 
     @Test
     void cost() {
-        actual.addToPriceList(94, new Data("Milk", new Price(65,50)));
-        actual.addToPriceList(44, new Data("Bread", new Price(25,55)));
+        actual.add(94, new NameAndPrice("Milk", new Price(65,50)));
+        actual.add(44, new NameAndPrice("Bread", new Price(25,55)));
 
         Assertions.assertEquals(new Price(131, 0), actual.cost(94, 2));
         Assertions.assertEquals(new Price(76, 65), actual.cost(44, 3));

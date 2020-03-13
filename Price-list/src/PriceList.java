@@ -1,12 +1,12 @@
 import java.util.HashMap;
 
-class PriceList {
+public class PriceList {
 
-    HashMap<Integer, Data> goods = new HashMap<>();
+    HashMap<Integer, NameAndPrice> goods = new HashMap<>();
 
-    void addToPriceList(Integer code, Data nameAndPrice) {
+    void add(Integer code, NameAndPrice nameAndPrice) {
         codeIsNull(code);
-        dataIsNull(nameAndPrice);
+        nameAndPriceIsNull(nameAndPrice);
         if (!goods.containsKey(code)) goods.put(code, nameAndPrice);
     }
 
@@ -14,28 +14,27 @@ class PriceList {
         if (code == null) throw new NullPointerException();
     }
 
-    private void dataIsNull(Data data) {
+    private void nameAndPriceIsNull(NameAndPrice data) {
         if (data.getName() == null || data.getPrice() == null)
             throw new NullPointerException();
     }
 
-    void deleteFromPriceList(Integer code) {
-        if (goods.containsKey(code)) goods.remove(code);
-        else throw new NullPointerException();
+    void delete(Integer code) {
+        goods.remove(code);
     }
 
     void changePrice(Integer code, Price price) {
         codeIsNull(code);
-        dataIsNull(new Data(goods.get(code).getName(), price));
-        if (goods.containsKey(code)) goods.put(code, new Data(goods.get(code).getName(), price));
-        else throw new NullPointerException();
+        nameAndPriceIsNull(new NameAndPrice(goods.get(code).getName(), price));
+        if (goods.containsKey(code)) goods.put(code, new NameAndPrice(goods.get(code).getName(), price));
+        else throw new IllegalArgumentException();
     }
 
     void changeName(Integer code, String name) {
         codeIsNull(code);
-        dataIsNull(new Data(name, goods.get(code).getPrice()));
-        if (goods.containsKey(code)) goods.put(code, new Data(name, goods.get(code).getPrice()));
-        else throw new NullPointerException();
+        nameAndPriceIsNull(new NameAndPrice(name, goods.get(code).getPrice()));
+        if (goods.containsKey(code)) goods.put(code, new NameAndPrice(name, goods.get(code).getPrice()));
+        else throw new IllegalArgumentException();
     }
 
     Price cost(Integer code, Integer numberOfGoods) {

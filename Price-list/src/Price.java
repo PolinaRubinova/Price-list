@@ -1,4 +1,4 @@
-class Price {
+public class Price {
 
     private int priceRub;
     private int pricePen;
